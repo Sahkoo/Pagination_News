@@ -13,6 +13,7 @@ let span = document.querySelector(".spanchik")
 let btnLeft = document.querySelector(".btn_1")
 let btnRight = document.querySelector(".btn_2")
 
+
 button.addEventListener("click", function () {
     let input = inpit.value.trim()
     if (input && input !== news) {
@@ -24,6 +25,20 @@ button.addEventListener("click", function () {
 })
 
 function fetchNews() {
+    if (!news) {
+        let saveNews = localStorage.getItem("news")
+        let savePage = localStorage.getItem("page")
+
+        if (saveNews) {
+            news = saveNews
+            pages = parseInt(savePage, 10) || 1
+            inpit.value = news
+            span.classList.remove("hidden")
+        }
+    }
+
+
+    
     let ask = `${API_URL}?q=${news}&page=${pages}&pageSize=${PAGE_SIZE}&apiKey=${API_KEY}`
     fetch(ask)
         .then((Response) => {
@@ -61,6 +76,10 @@ function fetchNews() {
         })
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchNews()
+})
+
 function Pagination(totalResults) {
     let totalAvailablePages = Math.ceil(totalResults / PAGE_SIZE)
     let totalPages = Math.min(totalAvailablePages, MAX_PAGES)
@@ -81,7 +100,12 @@ function Pagination(totalResults) {
     } else {
         btnRight.style.display = "inline-block"
     }
+
+    localStorage.setItem("news", news)
+    localStorage.setItem("page", pages)
 }
+
+
 
 
 
