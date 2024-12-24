@@ -1,4 +1,4 @@
-let API_KEY = "73f79c765b634dfb90da64b9e106e07c"
+let API_KEY = "10db4e2351474845b3b7b8c927f57de6"
 let API_URL = "https://newsapi.org/v2/everything"
 
 let news = ""
